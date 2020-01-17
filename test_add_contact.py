@@ -18,8 +18,9 @@ class AddContact(unittest.TestCase):
 
     def test_add_empty_contact(self):
         wd = self.wd
-        self.open_home_page(wd)
+        self.open_site(wd)
         self.login(wd, username="admin", password="secret")
+        self.open_home_page(wd)
         self.new_contact_creation(wd, Group_contact(firstname="", middlename="", lastname="", nickname="", title="",
                                   company="", address="", home="", mobile="", work="", fax="",
                                   email="", email2="", email3="", homepage="", bday="", bmonth="-", byear="", aday="",
@@ -31,8 +32,9 @@ class AddContact(unittest.TestCase):
     
     def test_add_contact(self):
         wd = self.wd
-        self.open_home_page(wd)
+        self.open_site(wd)
         self.login(wd, username="admin", password="secret")
+        self.open_home_page(wd)
         self.new_contact_creation(wd, Group_contact(firstname="Firskatze", middlename="Middlekatze", lastname="Lasthund", nickname="Nickhund", title="Titlehamster",
                                   company="DobbiTelecom", address="Frankfurt am Main", home="7458232", mobile="+79111234545", work="tester", fax="shmax",
                                   email="qw@qw.qw", email2="we@we.we", email3="er@er.er", homepage="pagehome", bday="20", bmonth="February", byear="1917", aday="17",
@@ -40,6 +42,11 @@ class AddContact(unittest.TestCase):
         self.save_contact(wd)
         self.return_to_homepage(wd)
         self.logout(wd)
+
+
+
+    def open_home_page(self, wd):
+        wd.find_element_by_link_text("home").click()
 
     def logout(self, wd):
 
@@ -155,9 +162,8 @@ class AddContact(unittest.TestCase):
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(Group_contact.notes)
 
-    def open_home_page(self, wd):
-        # open home page
-        wd.get("http://localhost/edit.php")
+    def open_site(self, wd):
+        wd.get("http://localhost/")
 
     def login(self, wd, username, password):
         # login
