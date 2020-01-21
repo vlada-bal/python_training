@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from group_for_contact import Group_contact
-from application_contacts import Application_con
+from model.group_for_contact import Group_contact
+from fixture.application_contacts import Application_con
 
 @pytest.fixture()
 def app(request):
