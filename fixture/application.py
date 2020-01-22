@@ -12,7 +12,7 @@ class Application:
         self.wd.implicitly_wait(30)
         self.session = SessionHelper(self)
         self.group2 = GroupHelper(self)
-        self.group_for_contacts2 = ContactsHelper(self)
+        self.contacts2 = ContactsHelper(self)
 
     def open_home_page(self):
         wd = self.wd
