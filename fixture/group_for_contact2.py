@@ -4,13 +4,17 @@ class ContactsHelper:
     def __init__(self, app):
         self.app = app
 
+    def return_to_homepage(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home page").click()
+
     def save_contact(self):
         wd = self.app.wd
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_to_homepage()
 
     def creation(self, Group_contact):
-        wd = self.app.app.wd
+        wd = self.app.wd
         # add new address book
         wd.find_element_by_link_text("add new").click()
         # add firstname
@@ -76,11 +80,11 @@ class ContactsHelper:
         wd.find_element_by_name("homepage").send_keys(Group_contact.homepage)
         # add Birthday
         wd.find_element_by_name("bday").click()
-        Select(wd.find_element_by_name("bday")).select_by_visible_text(Group_contact.bday)
+        wd.find_element_by_name("bday").send_keys(Group_contact.bday)
         wd.find_element_by_name("bday").click()
         # add month
         wd.find_element_by_name("bmonth").click()
-        Select(wd.find_element_by_name("bmonth")).select_by_visible_text(Group_contact.bmonth)
+        wd.find_element_by_name("bmonth").send_keys(Group_contact.bmonth)
         wd.find_element_by_name("bmonth").click()
         # add yeahr
         wd.find_element_by_name("byear").click()
@@ -89,11 +93,11 @@ class ContactsHelper:
         wd.find_element_by_name("theform").click()
         # add Anniversary day
         wd.find_element_by_name("aday").click()
-        Select(wd.find_element_by_name("aday")).select_by_visible_text(Group_contact.aday)
+        wd.find_element_by_name("aday").send_keys(Group_contact.aday)
         wd.find_element_by_name("aday").click()
         # add Anniversary month
         wd.find_element_by_name("amonth").click()
-        Select(wd.find_element_by_name("amonth")).select_by_visible_text(Group_contact.amonth)
+        wd.find_element_by_name("amonth").send_keys(Group_contact.amonth)
         wd.find_element_by_name("amonth").click()
         # add Anniversary year
         wd.find_element_by_name("ayear").click()
