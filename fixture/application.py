@@ -2,7 +2,7 @@ from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.group2 import GroupHelper
 
-from fixture.contact2 import ContactsHelper
+from fixture.contact_helper import ContactHelper
 from selenium.webdriver.support.ui import Select
 
 class Application:
@@ -12,7 +12,7 @@ class Application:
         self.wd.implicitly_wait(30)
         self.session = SessionHelper(self)
         self.group2 = GroupHelper(self)
-        self.contacts2 = ContactsHelper(self)
+        self.contact_helper = ContactHelper(self)
 
     def open_home_page(self):
         wd = self.wd

@@ -1,12 +1,14 @@
+from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
 
-
-class ContactsHelper:
+class ContactHelper:
     def __init__(self, app):
         self.app = app
 
     def return_to_homepage(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home page").click()
+        wd.find_element_by_link_text("home").click()
 
     def save_contact(self):
         wd = self.app.wd
@@ -115,3 +117,14 @@ class ContactsHelper:
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        self.return_to_homepage()
+        # select first contact
+        wd.find_element_by_name("selected[]").click()
+        # submit deletion
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        alert = wd.switch_to_alert()
+        alert.accept()
+        self.return_to_homepage()
