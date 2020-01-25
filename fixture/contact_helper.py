@@ -128,3 +128,17 @@ class ContactHelper:
         alert = wd.switch_to_alert()
         alert.accept()
         self.return_to_homepage()
+
+    def edit_contact(self):
+        wd=self.app.wd
+        self.return_to_homepage()
+        # Edit с id
+        wd.find_element_by_xpath("//a[contains(@href,'edit.php?id=58')]").click()
+        # внести изменения
+        wd.find_element_by_name("notes").click()
+        wd.find_element_by_name("notes").clear()
+        wd.find_element_by_name("notes").send_keys("privet kak dela")
+        # update
+        wd.find_element_by_name("update").click()
+        self.return_to_homepage()
+

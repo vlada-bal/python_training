@@ -1,6 +1,6 @@
 from selenium import webdriver
 from fixture.session import SessionHelper
-from fixture.group2 import GroupHelper
+from fixture.group_helper import GroupHelper
 
 from fixture.contact_helper import ContactHelper
 from selenium.webdriver.support.ui import Select
@@ -11,7 +11,7 @@ class Application:
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
         self.session = SessionHelper(self)
-        self.group2 = GroupHelper(self)
+        self.group_helper = GroupHelper(self)
         self.contact_helper = ContactHelper(self)
 
     def open_home_page(self):
