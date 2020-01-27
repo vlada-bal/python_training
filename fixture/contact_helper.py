@@ -130,10 +130,11 @@ class ContactHelper:
         self.return_to_homepage()
 
     def edit_contact(self):
-        wd=self.app.wd
+        wd = self.app.wd
         self.return_to_homepage()
-        # Edit с id
-        wd.find_element_by_xpath("//a[contains(@href,'edit.php?id=58')]").click()
+        # Edit
+        # wd.find_element_by_xpath("//a[contains(@href,'Edit')]").click() - неправильно
+        wd.find_element_by_css_selector("[id='maintable'] [name='entry'] td:nth-child(8) a img").click()
         # внести изменения
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
