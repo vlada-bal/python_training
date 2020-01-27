@@ -1,7 +1,3 @@
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
-
 class ContactHelper:
     def __init__(self, app):
         self.app = app
@@ -15,10 +11,8 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_to_homepage()
 
-    def creation(self, contact):
+    def fill_contact_form(self, contact):
         wd = self.app.wd
-        # add new address book
-        wd.find_element_by_link_text("add new").click()
         # add firstname
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -118,6 +112,12 @@ class ContactHelper:
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
 
+    def create_contact(self, contact):
+        wd = self.app.wd
+        # add new address book
+        wd.find_element_by_link_text("add new").click()
+        self.fill_contact_form(contact)
+
     def delete_first_contact(self):
         wd = self.app.wd
         self.return_to_homepage()
@@ -129,16 +129,14 @@ class ContactHelper:
         alert.accept()
         self.return_to_homepage()
 
-    def edit_contact(self):
+    def edit_contact(self, contact):
         wd = self.app.wd
         self.return_to_homepage()
         # Edit
         # wd.find_element_by_xpath("//a[contains(@href,'Edit')]").click() - неправильно
         wd.find_element_by_css_selector("[id='maintable'] [name='entry'] td:nth-child(8) a img").click()
         # внести изменения
-        wd.find_element_by_name("notes").click()
-        wd.find_element_by_name("notes").clear()
-        wd.find_element_by_name("notes").send_keys("privet kak dela")
+        self.fill_contact_form(contact)
         # update
         wd.find_element_by_name("update").click()
         self.return_to_homepage()

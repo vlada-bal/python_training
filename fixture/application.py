@@ -3,7 +3,6 @@ from fixture.session import SessionHelper
 from fixture.group_helper import GroupHelper
 
 from fixture.contact_helper import ContactHelper
-from selenium.webdriver.support.ui import Select
 
 class Application:
 
@@ -21,7 +20,6 @@ class Application:
     def return_to_homepage(self):
         wd = self.wd
         wd.find_element_by_link_text("home page").click()
-
 
     def destroy(self):
         self.wd.quit()
