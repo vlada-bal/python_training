@@ -86,7 +86,7 @@ class ContactHelper:
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
         wd.find_element_by_name("byear").send_keys(contact.byear)
-        wd.find_element_by_name("theform").click()
+        #wd.find_element_by_name("theform").click() строка ломает тест на редактирование контакта
         # add Anniversary day
         wd.find_element_by_name("aday").click()
         wd.find_element_by_name("aday").send_keys(contact.aday)
