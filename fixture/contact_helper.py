@@ -14,7 +14,6 @@ class ContactHelper:
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
-        # add firstname
         self.change_field_value("firstname", contact.firstname)
         self.change_field_value("middlename", contact.middlename)
         self.change_field_value("lastname", contact.lastname)
@@ -30,12 +29,12 @@ class ContactHelper:
         self.change_field_value("email2", contact.email2)
         self.change_field_value("email3", contact.email3)
         self.change_field_value("homepage", contact.homepage)
-        self.change_field_value("bday", contact.bday)
-        self.change_field_value("bmonth", contact.bmonth)
-        self.change_field_value("byear", contact.byear)
-        self.change_field_value("aday", contact.aday)
-        self.change_field_value("amonth", contact.amonth)
-        self.change_field_value("ayear", contact.ayear)
+        self.change_days("bday", contact.bday)
+        self.change_days("bmonth", contact.bmonth)
+        self.change_days("byear", contact.byear)
+        self.change_days("aday", contact.aday)
+        self.change_days("amonth", contact.amonth)
+        self.change_days("ayear", contact.ayear)
         self.change_field_value("address2", contact.address2)
         self.change_field_value("phone2", contact.phone2)
         self.change_field_value("notes", contact.notes)
@@ -61,8 +60,7 @@ class ContactHelper:
         wd = self.app.wd
         self.return_to_homepage()
         # Edit
-        # wd.find_element_by_xpath("//a[contains(@href,'Edit')]").click() - неправильно
-        wd.find_element_by_css_selector("[id='maintable'] [name='entry'] td:nth-child(8) a img").click()
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # внести изменения
         self.fill_contact_form(contact)
         # update
@@ -86,6 +84,14 @@ class ContactHelper:
             wd.find_element_by_name(field_name).click()
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
+
+    def change_days(self, field_name, text):
+        wd = self.app.wd
+        wd.find_element_by_name(field_name).click()
+        wd.find_element_by_name(field_name).send_keys(text)
+        wd.find_element_by_name(field_name).click()
+
+
 
     def count(self):
         wd = self.app.wd
