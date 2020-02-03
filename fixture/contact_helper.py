@@ -1,3 +1,6 @@
+from model.contact import Contact
+from selenium.webdriver.support.ui import Select
+
 class ContactHelper:
     def __init__(self, app):
         self.app = app
@@ -29,12 +32,12 @@ class ContactHelper:
         self.change_field_value("email2", contact.email2)
         self.change_field_value("email3", contact.email3)
         self.change_field_value("homepage", contact.homepage)
-        self.change_days("bday", contact.bday)
-        self.change_days("bmonth", contact.bmonth)
-        self.change_days("byear", contact.byear)
-        self.change_days("aday", contact.aday)
-        self.change_days("amonth", contact.amonth)
-        self.change_days("ayear", contact.ayear)
+        self.change_days_and_months("bday", contact.bday)
+        self.change_days_and_months("bmonth", contact.bmonth)
+        self.change_field_value("byear", contact.byear)
+        self.change_days_and_months("aday", contact.aday)
+        self.change_days_and_months("amonth", contact.amonth)
+        self.change_field_value("ayear", contact.ayear)
         self.change_field_value("address2", contact.address2)
         self.change_field_value("phone2", contact.phone2)
         self.change_field_value("notes", contact.notes)
@@ -71,7 +74,7 @@ class ContactHelper:
         wd = self.app.wd
         self.return_to_homepage()
         # open modification form
-        wd.find_element_by_css_selector("[id='maintable'] [name='entry'] td:nth-child(8) a img").click()
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # fill group form
         self.fill_contact_form(new_contact_data)
         # submit modification
@@ -85,16 +88,26 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
-    def change_days(self, field_name, text):
+    def change_days_and_months(self, field_name, text):
         wd = self.app.wd
         wd.find_element_by_name(field_name).click()
-        wd.find_element_by_name(field_name).send_keys(text)
+        select = Select(wd.find_element_by_name(field_name))
+        select.select_by_visible_text(text)
         wd.find_element_by_name(field_name).click()
-
 
 
     def count(self):
         wd = self.app.wd
         self.return_to_homepage()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.return_to_homepage()
+        contact_list = []
+        for element in wd.find_elements_by_css_selector("tr[name=entry] input[name='selected[]'"):
+            text = element.text
+            id = element.get_attribute("value")
+            contact_list.append(Contact(id=id, firstname=text, lastname=text))
+        return contact_list
 
