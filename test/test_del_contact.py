@@ -9,6 +9,5 @@ def test_delete_first_contact(app):
     new_contact = app.contact_helper.get_contact_list()
     assert len(old_contact) -1 == len(new_contact)
 
-
     old_contact[0:1] = []
     assert old_contact == new_contact
