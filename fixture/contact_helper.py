@@ -49,7 +49,12 @@ class ContactHelper:
         self.fill_contact_form(contact)
         self.contact_cache = None
 
+
+
     def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.return_to_homepage()
         # select first contact
@@ -73,7 +78,10 @@ class ContactHelper:
         self.return_to_homepage()
         self.contact_cache = None
 
-    def modify_first_contact(self, new_contact_data):
+    def modify_first_contact(self):
+        self.modify_contact_by_index(0)
+
+    def modify_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         self.return_to_homepage()
         # open modification form
