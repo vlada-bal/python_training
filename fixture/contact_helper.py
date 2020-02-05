@@ -58,7 +58,7 @@ class ContactHelper:
         wd = self.app.wd
         self.return_to_homepage()
         # select first contact
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         alert = wd.switch_to_alert()
@@ -85,7 +85,7 @@ class ContactHelper:
         wd = self.app.wd
         self.return_to_homepage()
         # open modification form
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         # fill group form
         self.fill_contact_form(new_contact_data)
         # submit modification
