@@ -49,3 +49,6 @@ class Contact:
               return int(self.id)
          else:
              return maxsize
+
+
+Monate = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]

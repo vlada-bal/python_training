@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-#
 import pytest
 from model.contact import Contact
+from model.contact import Monate
 import random
 import string
+
 
 def random_string(prefix, maxlen):
     symbols = string.ascii_letters + string.digits + " "*10
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+
+
 
 testdata= [Contact(firstname="", middlename="", lastname="", nickname="", title="",
                                                    company="", address="", home="", mobile="", work="", fax="",
@@ -19,8 +23,9 @@ testdata= [Contact(firstname="", middlename="", lastname="", nickname="", title=
                    address=random_string("address", 10), home=random_string("home", 10),
                    mobile=random_string("mobile", 10), work=random_string("work", 10), fax=random_string("fax", 10),
                    email=random_string("email", 10), email2=random_string("email2", 10), email3=random_string("email3", 10),
-                   homepage=random_string("homepage", 10), bday="", bmonth="-",
-                   byear="", aday="", amonth="-", ayear="", address2=random_string("address2", 10), phone2=random_string("phone2", 10),
+                   homepage=random_string("homepage", 10), bday=str(random.randint(1,27)), bmonth=Monate[random.randint(0,11)],
+                   byear=random.randint(1600,2027), aday=str(random.randint(1,27)), amonth=Monate[random.randint(0,11)],
+                   ayear=random.randint(1600,2027), address2=random_string("address2", 10), phone2=random_string("phone2", 10),
                    notes=random_string("notes", 10))
 ]
 @pytest.mark.parametrize ("contact", testdata, ids=[repr(x) for x in testdata])
