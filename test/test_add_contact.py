@@ -3,12 +3,14 @@ import pytest
 from model.contact import Contact
 from model.contact import Monate
 import random
+import re
 import string
 
 
 def random_string(prefix, maxlen):
     symbols = string.ascii_letters + string.digits + " "*10
-    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+    result = prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+    return str.strip(re.sub('\s+', ' ', result))
 
 
 
@@ -34,7 +36,7 @@ def test_add_empty_contact(app, contact):
     app.contact_helper.create_contact(contact)
     app.contact_helper.save_contact()
     new_contact = app.contact_helper.get_contact_list()
-    assert len(old_contact) + 1 == app.contact_helper.count ()
+    assert len(old_contact) + 1 == app.contact_helper.count()
     old_contact.append(contact)
     assert sorted(old_contact, key=Contact.id_or_max) == sorted(new_contact, key=Contact.id_or_max)
 
