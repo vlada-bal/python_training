@@ -8,12 +8,11 @@ from model.group import Group
   #         for header in ["", random_string("header", 20)]
    #        for footer in ["", random_string("footer", 20)]]
 
-def test_add_group(app, json_groups):
+def test_add_group(app, db, json_groups):
     group = json_groups
-    old_groups = app.group_helper.get_group_list()
+    old_groups = db.get_group_list()
     app.group_helper.creation(group)
-    new_groups = app.group_helper.get_group_list()
-    assert len(old_groups) + 1 == app.group_helper.count()
+    new_groups = db.get_group_list()
     old_groups.append(group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
