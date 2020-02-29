@@ -1,7 +1,6 @@
 from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.group_helper import GroupHelper
-
 from fixture.contact_helper import ContactHelper
 
 class Application:
@@ -38,3 +37,6 @@ class Application:
 
     def destroy(self):
         self.wd.quit()
+
+
+
