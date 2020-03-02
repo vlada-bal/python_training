@@ -174,10 +174,11 @@ class ContactHelper:
         home2phone = re.search("P: (.*)", text).group(1)
         return Contact(home=homephone, mobile=mobilephone, work=workphone, phone2=home2phone)
 
-    def contact_add_to_group(self, group):
+    def contact_add_to_group(self, group, id):
         wd = self.app.wd
         self.return_to_homepage()
-        wd.find_elements_by_name("selected[]")[0].click()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        #wd.find_elements_by_id(contact_id).click()
         wd.find_element_by_name("to_group").click()
         select = Select(wd.find_element_by_name("to_group"))
         select.select_by_visible_text(group.name)
