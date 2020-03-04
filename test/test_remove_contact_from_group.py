@@ -14,14 +14,21 @@ def test_remove_contact_from_group(app, check_ui):
     if len(db.get_group_list()) == 0:
         app.group_helper.creation(Group(name="test"))
 
-    old_list = db.get_contacts_in_group()
-    group_list = db.get_group_list()
-    group = group_list[0]
+    has_any_contacts_in_groups = False
 
+    for group in db.get_group_list():
+        contact_list = db.get_contacts_in_group(group)
+        if (len(contact_list) > 0):
+            has_any_contacts_in_groups = True
+            contact_list_count = len(contact_list)
+            app.contact_helper.remove_contact_from_group(group)
+            new_contact_list_count = len(db.get_contacts_in_group(group))
+            assert contact_list_count + 1 == new_contact_list_count
+            break
 
-    if len(contacts_in_group) == 0:
-        app.contact_helper.contact_add_to_group(group)
-    app.contact_helper.remove_contact_from_group(group)
+    first_group = db.get_group_list()[0]
 
-    new_list = db.get_contacts_in_group()
-    assert len(old_list) + 1 == len(new_list)
+    if has_any_contacts_in_groups is not True:
+        app.contact_helper.contact_add_to_group(first_group)
+
+    app.contact_helper.remove_contact_from_group(first_group)
