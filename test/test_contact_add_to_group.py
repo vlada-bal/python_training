@@ -15,17 +15,22 @@ def test_contact_add_to_group(app, check_ui):
         app.group_helper.creation(Group(name="test"))
 
     group_list = db.get_group_list()
-    has_contacts_not_in_group = False
 
-   # old_list = db.get_contacts_in_group()
+# делаем флаг добавлены ли все контакты во все группы
+    has_contacts_not_in_group = False
 
 # получаем контакты, которые не в группе
     for i in range(len(group_list)):
         group = group_list[i]
+
         contacts_not_in_group = db.get_contacts_not_in_group(group)
-        # если существуют контакты, которые не в группе, то мы берем 1й контакт и добавляем в группу
+        # если существуют контакты, которые не в группе, то мы берем 1й контакт и добавляем в эту группу
         if (len(contacts_not_in_group) > 0):
+            quantity_contacts_in_group = db.get_contacts_in_group(group)
             app.contact_helper.contact_add_to_group(group, contacts_not_in_group[0].id)
+            # делаем проверку что мы до бавили этот контакт в эту группу
+            new_quantity_contacts_in_group = db.get_contacts_in_group(group)
+            assert len(quantity_contacts_in_group) + 1 == len(new_quantity_contacts_in_group)
             has_contacts_not_in_group = True
             break
 
@@ -33,9 +38,8 @@ def test_contact_add_to_group(app, check_ui):
     if has_contacts_not_in_group is not True:
         new_contact = Contact(firstname="el_contacto", id="666")
         app.contact_helper.create_contact(new_contact)
+        group = group_list[0]
+        quantity_contacts_in_group = db.get_contacts_in_group(group)
         app.contact_helper.contact_add_to_group(group, new_contact.id)
-
-    #new_list = db.get_contacts_in_group()
-# проверка на то, что добавили контакт в группу
-   # assert len(old_list)+1 == len(new_list)
-
+        new_quantity_contacts_in_group = db.get_contacts_in_group(group)
+        assert len(quantity_contacts_in_group) + 1 == len(new_quantity_contacts_in_group)
