@@ -24,7 +24,7 @@ def test_remove_contact_from_group(app, check_ui):
             contact_list_count = len(contact_list)
             app.contact_helper.remove_contact_from_group(group)
             new_contact_list_count = len(db.get_contacts_in_group(group))
-            assert contact_list_count + 1 == new_contact_list_count
+            assert contact_list_count - 1 == new_contact_list_count
             break
 
     first_group = db.get_group_list()[0]
