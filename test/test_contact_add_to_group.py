@@ -36,10 +36,18 @@ def test_contact_add_to_group(app, check_ui):
 
 # если все контакты во всех группах, то создаём новый котакт и связываем его с группой
     if has_contacts_not_in_group is not True:
-        new_contact = Contact(firstname="el_contacto", id="666")
+        # создаём нов контакт
+        new_contact = Contact(firstname="el_contacto")
         app.contact_helper.create_contact(new_contact)
+        app.contact_helper.save_contact()
+        # берём первую группу в которую будем добавлять контакт
         group = group_list[0]
+        # создаём списки для сравнения количества контактов в группе
         quantity_contacts_in_group = db.get_contacts_in_group(group)
-        app.contact_helper.contact_add_to_group(group, new_contact.id)
-        new_quantity_contacts_in_group = db.get_contacts_in_group(group)
-        assert len(quantity_contacts_in_group) + 1 == len(new_quantity_contacts_in_group)
+        len_quantity_contacts_in_group = len(quantity_contacts_in_group)
+        # берём последний созданный котакт и связываем с группой
+        new_contact_from_db = db.get_contact_list()[-1]
+        app.contact_helper.contact_add_to_group(group, new_contact_from_db.id)
+        # сравниваем длину контактов
+        new_quantity_contacts_in_group = len(db.get_contacts_in_group(group))
+        assert len_quantity_contacts_in_group + 1 == new_quantity_contacts_in_group
