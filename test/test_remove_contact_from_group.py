@@ -14,15 +14,18 @@ def test_remove_contact_from_group(app, check_ui):
     if len(db.get_group_list()) == 0:
         app.group_helper.creation(Group(name="test"))
 
-    # делаем флаг добавлены ли хотя бы один контакт в группу
+    # делаем флаг добавлен ли хоть один контакт в группу
     has_any_contacts_in_groups = False
 
+    # создаем цикл в котором получаем список контактов для каждой группы
     for group in db.get_group_list():
         contact_list = db.get_contacts_in_group(group)
+        # если в группе есть хоть один контакт, удаяем его из группы
         if (len(contact_list) > 0):
             has_any_contacts_in_groups = True
             contact_list_count = len(contact_list)
-            app.contact_helper.remove_contact_from_group(group)
+            contact_to_delete = contact_list[0]
+            app.contact_helper.remove_contact_from_group(group, contact_to_delete.id)
             new_contact_list_count = len(db.get_contacts_in_group(group))
             assert contact_list_count - 1 == new_contact_list_count
             break
