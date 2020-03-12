@@ -33,7 +33,8 @@ def test_remove_contact_from_group(app, check_ui):
     first_group = db.get_group_list()[0]
     # кейс когда контакт с группой не связан
     if has_any_contacts_in_groups is not True:
-        app.contact_helper.contact_add_to_group(first_group)
+
+        app.contact_helper.contact_add_to_group(first_group, first_group.id)
         contact_list = db.get_contacts_in_group(first_group)
         app.contact_helper.remove_contact_from_group(first_group)
         new_contact_list_count = db.get_contacts_in_group(first_group)
