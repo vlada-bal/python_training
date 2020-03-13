@@ -36,7 +36,7 @@ def test_remove_contact_from_group(app, check_ui):
 
         app.contact_helper.contact_add_to_group(first_group, first_group.id)
         contact_list = db.get_contacts_in_group(first_group)
-        app.contact_helper.remove_contact_from_group(first_group)
+        app.contact_helper.remove_contact_from_group(first_group, first_group.id)
         new_contact_list_count = db.get_contacts_in_group(first_group)
         # проверяем что удалилось
         assert len(contact_list) - 1 == len(new_contact_list_count)
